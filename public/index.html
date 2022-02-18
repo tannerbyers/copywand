@@ -1,0 +1,169 @@
+<html>
+  <head>
+    <!-- Font Awesome -->
+    <link
+      href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"
+      rel="stylesheet"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css"
+      rel="stylesheet"
+    />
+    <link href="./stylesheets/style.css" rel="stylesheet" />
+
+    <!-- MDB -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"
+    ></script>
+
+    <script>
+      function showImg(url) {
+        const parent = document.querySelector("#screenshot");
+        parent.classList.remove("d-none");
+
+        const img = document.querySelector("#screenshot-img");
+        img.setAttribute("src", url);
+
+        const downloadUrl = document.querySelector("#screenshot-url");
+        downloadUrl.setAttribute("download", url);
+        downloadUrl.setAttribute("href", url);
+      }
+
+      function toggleLoader() {
+        const el = document.querySelector(".spinner");
+        if (el.classList.contains("d-none")) {
+          el.classList.remove("d-none");
+        } else {
+          el.classList.add("d-none");
+        }
+      }
+      function getScreenshot(ele) {
+        if (event.key === "Enter") {
+          let link = ele.value;
+
+          var validURLRegularExpression = new RegExp(
+            "^(https?:\\/\\/)?" + // protocol
+              "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+              "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+              "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+              "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+              "(\\#[-a-z\\d_]*)?$",
+            "i"
+          ); // fragment locator
+
+          if (!validURLRegularExpression.test(link)) {
+            alert("please enter a valid url");
+            return;
+          }
+
+          toggleLoader();
+
+          if (link.indexOf("www.") != 0) {
+            link = "www." + link;
+          }
+
+          if (link.indexOf("http://") != 0 || link.indexOf("https://") != 0) {
+            link = "https://" + link;
+          }
+
+          const url = window.location.href + "api/" + link;
+
+          let xhr = new XMLHttpRequest();
+          xhr.open("get", url);
+          xhr.send();
+
+          xhr.onload = function () {
+            console.log(xhr.response);
+            toggleLoader();
+            showImg(xhr.response);
+          };
+
+          console.log(url);
+        }
+      }
+    </script>
+  </head>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand p-2" href="#">Copy Wand</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="#"
+          >Home <span class="sr-only">(current)</span></a
+        >
+        <a class="nav-item nav-link" href="#">Features</a>
+        <a class="nav-item nav-link" href="#">Pricing</a>
+        <a class="nav-item nav-link disabled" href="#">Disabled</a>
+      </div>
+    </div>
+  </nav>
+  <div class="d-flex justify-content-center">
+    <div class="">
+      <p class="text-white">
+        Enter the url you would like a screenshot for and hit enter!
+      </p>
+      <div class="form-outline form-white searchbar w-50">
+        <input
+          onkeydown="getScreenshot(this)"
+          type="text"
+          id="formWhite"
+          class="form-control blackfont p-3"
+          required
+          pattern="[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
+        />
+        <label class="form-label blackfont text-white" for="formWhite"
+          >Enter URL</label
+        >
+      </div>
+      <h3 class="text-white">
+        Interested in using this in your app? Try out the <a href="#">API!</a>
+      </h3>
+
+      <div class="spinner d-none m-5 d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only text-white">Loading...</span>
+        </div>
+      </div>
+
+      <div
+        id="screenshot"
+        class="
+          d-none
+          m-5
+          d-flex
+          justify-content-center
+          align-items-center
+          text-align-center
+        "
+      >
+        <a class="" id="screenshot-url" href="" download="">
+          Download Screenshot
+          <i class="icon-file icon-4x icon-border m-5"></i>
+        </a>
+        <img id="screenshot-img" src="" />
+      </div>
+    </div>
+  </div>
+</html>
