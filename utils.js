@@ -8,8 +8,8 @@ exports.takeScreenshot = async (url) => {
   });
   let page = await browser.newPage();
   await page.goto(url);
-  const id = nanoid();
-  const customFilePath = `./public/images/${id}.jpg`;
+  var filename = url.replace(/[^a-z0-9]/gi, "_").toLowerCase();
+  const customFilePath = `./public/images/${filename}.jpg`;
   await page.screenshot({ path: customFilePath, type: "jpeg" });
   await page.close();
   await browser.close();

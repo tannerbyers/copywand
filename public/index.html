@@ -70,14 +70,6 @@
 
           toggleLoader();
 
-          if (link.indexOf("www.") != 0) {
-            link = "www." + link;
-          }
-
-          if (link.indexOf("http://") != 0 || link.indexOf("https://") != 0) {
-            link = "https://" + link;
-          }
-
           const url = window.location.href + "api/" + link;
 
           let xhr = new XMLHttpRequest();
@@ -95,52 +87,19 @@
       }
     </script>
   </head>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand p-2" href="#">Copy Wand</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="#"
-          >Home <span class="sr-only">(current)</span></a
-        >
-        <a class="nav-item nav-link" href="#">Features</a>
-        <a class="nav-item nav-link" href="#">Pricing</a>
-        <a class="nav-item nav-link disabled" href="#">Disabled</a>
-      </div>
-    </div>
-  </nav>
-  <div class="d-flex justify-content-center">
-    <div class="">
-      <p class="text-white">
-        Enter the url you would like a screenshot for and hit enter!
-      </p>
-      <div class="form-outline form-white searchbar w-50">
+  <div class="content">
+      <h4 class="text-white header">
+        Copy Wand <img class="wand-img" src="/wand.png"/> <small class="text-white">Get site screenshot</small>
+      </h4>
         <input
           onkeydown="getScreenshot(this)"
           type="text"
           id="formWhite"
-          class="form-control blackfont p-3"
+          class="form-control p-3 w-25"
           required
+          placeholder="Input URL here! (must have http or https)"
           pattern="[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
         />
-        <label class="form-label blackfont text-white" for="formWhite"
-          >Enter URL</label
-        >
-      </div>
-      <h3 class="text-white">
-        Interested in using this in your app? Try out the <a href="#">API!</a>
-      </h3>
-
       <div class="spinner d-none m-5 d-flex justify-content-center">
         <div class="spinner-border" role="status">
           <span class="sr-only text-white">Loading...</span>
@@ -149,21 +108,18 @@
 
       <div
         id="screenshot"
-        class="
-          d-none
-          m-5
-          d-flex
-          justify-content-center
-          align-items-center
-          text-align-center
-        "
+        class="downloadFile d-none"
       >
-        <a class="" id="screenshot-url" href="" download="">
+       <a class="" id="screenshot-url" href="" download="">
           Download Screenshot
-          <i class="icon-file icon-4x icon-border m-5"></i>
         </a>
-        <img id="screenshot-img" src="" />
+        <img class="screenshot-img" id="screenshot-img" src="" />
       </div>
+      <p class="pt-3 text-white">This search tool is here to let people test out the Copy Wand API before implementing it. <br/>
+          If you have feature requests or found any bugs, please <a href = "mailto: programtanner@gmail.com">Send Me An Email</a>
+      </p>
     </div>
   </div>
 </html>
+
+
