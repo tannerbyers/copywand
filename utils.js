@@ -18,6 +18,7 @@ const uploadFile = async (fileName) => {
   // Read content from the file
   const customFilePath = `./public/images/${fileName}`;
   const fileContent = fs.readFileSync(customFilePath);
+  console.log("trying to read file contents");
   // Setting up S3 upload parameters
   const params = {
     Bucket: BUCKET_NAME,
@@ -33,6 +34,7 @@ const uploadFile = async (fileName) => {
       }
     })
     .promise();
+  console.log("uploaded to s3");
   return data.Location;
 };
 
@@ -44,10 +46,12 @@ exports.takeScreenshot = async (url) => {
     defaultViewport: { width: 1280, height: 720 },
   });
   let page = await browser.newPage();
+  console.log("Created browser page");
   await page.goto(url);
   var fileName = uuidv4() + ".jpg";
   const customFilePath = `./public/images/${fileName}`;
   await page.screenshot({ path: customFilePath, type: "jpeg" });
+  console.log("screenshot taken with puppeteer");
   await page.close();
   await browser.close();
   // Will look at deleting file later
