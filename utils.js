@@ -3,6 +3,7 @@ const puppeteer = require("puppeteer");
 const { v4: uuidv4 } = require("uuid");
 const AWS = require("aws-sdk");
 const fs = require("fs");
+const dotenv = require('dotenv').config();
 
 const ID = process.env.ID;
 const SECRET = process.env.SECRET;

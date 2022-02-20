@@ -1,5 +1,6 @@
 const { MongoClient } = require("mongodb");
 // const { MONGODB_URI, DB_NAME } = require("./constants.js");
+const dotenv = require('dotenv').config();
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const DB_NAME = process.env.DB_NAME;
