@@ -3,7 +3,7 @@ const puppeteer = require("puppeteer");
 const { v4: uuidv4 } = require("uuid");
 const AWS = require("aws-sdk");
 const fs = require("fs");
-const dotenv = require('dotenv').config();
+const dotenv = require("dotenv").config();
 
 const ID = process.env.ID;
 const SECRET = process.env.SECRET;
@@ -38,6 +38,8 @@ const uploadFile = async (fileName) => {
 
 exports.takeScreenshot = async (url) => {
   let browser = await puppeteer.launch({
+    // This is needed for heroku puppeteer buildback
+    args: ["--no-sandbox"],
     headless: true,
     defaultViewport: { width: 1280, height: 720 },
   });
