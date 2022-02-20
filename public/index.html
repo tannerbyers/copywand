@@ -1,5 +1,15 @@
-<html>
+<!DOCTYPE html>
   <head>
+    <title>Copy Wand</title>
+
+    <!-- MAILCHIMP -->
+    <link href="//cdn-images.mailchimp.com/embedcode/slim-10_7_dtp.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+      #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+      /* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
+        We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+    </style>
+
     <!-- Font Awesome -->
     <link
       href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css"
@@ -24,7 +34,6 @@
 
     <!-- MDB -->
     <script
-      type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"
     ></script>
 
@@ -77,19 +86,16 @@
           xhr.send();
 
           xhr.onload = function () {
-            console.log(xhr.response);
             toggleLoader();
             showImg(xhr.response);
           };
-
-          console.log(url);
         }
       }
     </script>
   </head>
   <div class="content">
       <h4 class="text-white header">
-        Copy Wand <img class="wand-img" src="/wand.png"/> <small class="text-white">Get site screenshot</small>
+        Copy Wand <img alt="wand logo" class="wand-img" src="/wand.png"/> <small class="text-white">Get site screenshot</small>
       </h4>
         <input
           onkeydown="getScreenshot(this)"
@@ -113,13 +119,38 @@
        <a class="" id="screenshot-url" href="" download="">
           Download Screenshot
         </a>
-        <img class="screenshot-img" id="screenshot-img" src="" />
+        <img src="#" alt="screenshot of website" class="screenshot-img" id="screenshot-img" />
       </div>
-      <p class="pt-3 text-white">This search tool is here to let people test out the Copy Wand API before implementing it. <br/>
-          If you have feature requests or found any bugs, please <a href = "mailto: programtanner@gmail.com">Send Me An Email</a>
-      </p>
+      <p class="pt-3 text-white">This search tool is here to let people test out the Copy Wand API before implementing it. <br/>      </p>
+        <section class="footer">
+          <h4>If you're interested in using this as an API endpoint with the below features, sign up below to get an email once it becomes available!</h4>
+            <!-- Begin Mailchimp Signup Form -->
+            <div class="w-50" id="mc_embed_signup">
+            <form action="https://copywand.us14.list-manage.com/subscribe/post?u=50051c4eb0e2c5dab545ae086&amp;id=5aa8c1f7bf" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                <div id="mc_embed_signup_scroll">
+              
+              <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_50051c4eb0e2c5dab545ae086_5aa8c1f7bf" tabindex="-1" value=""></div>
+                    <div class="optionalParent">
+                        <div class="clear foot">
+                            <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+                            <p class="brandingLogo"><a href="http://eepurl.com/hVfX7r" title="Mailchimp - email marketing made easy and fun"><img src="https://eep.io/mc-cdn-images/template_images/branding_logo_text_light_dtp.svg"></a></p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </div>
+            <!--End mc_embed_signup-->
+        <ul class="text-white">
+          <li>Custom Time To Leave on API request</li>
+          <li>Specified Compression</li>
+          <li>Custom Image Sizing </li>
+          <li>Full Page screenshot option</li>
+          <li>Multiple file formats to choose from (jpg, png, svg, etc)</li>
+          <li>Delay Loading for websites with slow load speeds</li>
+        </ul>
+        <p>If you have feature requests or found bugs, please <a href="mailto:programtanner@gmail.com">Send Me An Email</a></p>
+      </section>
     </div>
-  </div>
 </html>
-
-

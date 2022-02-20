@@ -9,7 +9,7 @@ body {
 }
 
 a {
-  color: #FFD700;
+  color: #ffd700;
 }
 
 .content {
@@ -31,4 +31,14 @@ a {
 
 .wand-img {
   height: 1em;
+}
+
+.footer {
+  color: white;
+  padding-left: 3rem;
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  justify-content: left;
+  text-align: left;
 }
