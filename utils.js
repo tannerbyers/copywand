@@ -50,17 +50,20 @@ exports.takeScreenshot = async (url) => {
   await page.goto(url);
   var fileName = uuidv4() + ".jpg";
   const customFilePath = `./public/images/${fileName}`;
-  await page.screenshot({ path: customFilePath, type: "jpeg" });
-  console.log("screenshot taken with puppeteer");
-  await page.close();
-  await browser.close();
-  // Will look at deleting file later
-  // try {
-  //   fs.unlinkSync(customFilePath);
-  //   //file removed
-  // } catch (err) {
-  //   console.error(err);
-  // }
-  const awsURL = await uploadFile(fileName);
+  let awsURL = page
+    .screenshot({ path: customFilePath, type: "jpeg" })
+    .then(async () => {
+      console.log("screenshot taken with puppeteer");
+      await page.close();
+      await browser.close();
+      // Will look at deleting file later
+      // try {
+      //   fs.unlinkSync(customFilePath);
+      //   //file removed
+      // } catch (err) {
+      //   console.error(err);
+      // }
+      return await uploadFile(fileName);
+    });
   return awsURL;
 };
