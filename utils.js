@@ -14,7 +14,7 @@ const s3 = new AWS.S3({
   secretAccessKey: SECRET,
 });
 
-const uploadFile = async (screenshot, fileName) => {
+exports.uploadFile = async (screenshot, fileName) => {
   // Setting up S3 upload parameters
   const params = {
     Bucket: BUCKET_NAME,
@@ -34,6 +34,15 @@ const uploadFile = async (screenshot, fileName) => {
   return data.Location;
 };
 
+exports.parseUrl = function (url) {
+  url = decodeURIComponent(url);
+  if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
+    url = "http://" + url;
+  }
+
+  return url;
+};
+
 exports.takeScreenshot = async (url) => {
   let browser = await puppeteer.launch({
     // This is needed for heroku puppeteer buildback
@@ -45,11 +54,10 @@ exports.takeScreenshot = async (url) => {
   console.log("Created browser page");
   await page.goto(url);
   var fileName = uuidv4() + ".jpg";
-  let awsURL = page.screenshot({ type: "jpeg" }).then(async (screenshot) => {
+  return await page.screenshot({ type: "jpeg" }).then(async (screenshot) => {
     console.log("screenshot taken with puppeteer");
     await page.close();
     await browser.close();
-    return await uploadFile(screenshot, fileName);
+    return { screenshot: screenshot, fileName: fileName };
   });
-  return awsURL;
 };

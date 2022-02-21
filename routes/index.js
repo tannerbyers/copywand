@@ -1,5 +1,5 @@
 var express = require("express");
-const { takeScreenshot } = require("../utils.js");
+const { takeScreenshot, parseUrl, uploadFile } = require("../utils.js");
 const { connectToDatabase } = require("../mongodb.js");
 var router = express.Router();
 
@@ -13,21 +13,26 @@ router.get("/api/:url(*)", async function (req, res, next) {
   var url = req.params.url;
   let { db } = await connectToDatabase();
 
-  let existingURL = await db.collection("screenshots").findOne({ url: url });
+  parsedUrl = parseUrl(url);
+
+  let existingURL = await db
+    .collection("screenshots")
+    .findOne({ url: parsedUrl });
 
   if (existingURL) {
     res.send(existingURL.screenshotUrl);
     return;
   }
 
-  const screenshot = await takeScreenshot(url);
+  const { screenshot, fileName } = await takeScreenshot(parsedUrl);
+  const screenshotURL = await uploadFile(screenshot, fileName);
 
   db.collection("screenshots").insertOne({
-    url: url,
-    screenshotUrl: screenshot,
+    url: parsedUrl,
+    screenshotUrl: screenshotURL,
   });
 
-  res.send(screenshot);
+  res.send(screenshotURL);
 });
 
 module.exports = router;
