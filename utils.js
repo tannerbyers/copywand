@@ -14,16 +14,12 @@ const s3 = new AWS.S3({
   secretAccessKey: SECRET,
 });
 
-const uploadFile = async (fileName) => {
-  // Read content from the file
-  const customFilePath = `./public/images/${fileName}`;
-  const fileContent = fs.readFileSync(customFilePath);
-  console.log("trying to read file contents");
+const uploadFile = async (screenshot, fileName) => {
   // Setting up S3 upload parameters
   const params = {
     Bucket: BUCKET_NAME,
     Key: fileName, // File name you want to save as in S3
-    Body: fileContent,
+    Body: screenshot,
   };
 
   // Uploading files to the bucket
@@ -49,21 +45,11 @@ exports.takeScreenshot = async (url) => {
   console.log("Created browser page");
   await page.goto(url);
   var fileName = uuidv4() + ".jpg";
-  const customFilePath = `./public/images/${fileName}`;
-  let awsURL = page
-    .screenshot({ path: customFilePath, type: "jpeg" })
-    .then(async () => {
-      console.log("screenshot taken with puppeteer");
-      await page.close();
-      await browser.close();
-      // Will look at deleting file later
-      // try {
-      //   fs.unlinkSync(customFilePath);
-      //   //file removed
-      // } catch (err) {
-      //   console.error(err);
-      // }
-      return await uploadFile(fileName);
-    });
+  let awsURL = page.screenshot({ type: "jpeg" }).then(async (screenshot) => {
+    console.log("screenshot taken with puppeteer");
+    await page.close();
+    await browser.close();
+    return await uploadFile(screenshot, fileName);
+  });
   return awsURL;
 };
